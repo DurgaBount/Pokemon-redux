@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { fetchPokemonList, fetchPokemonDetails } from "../../api/pokemonApi";
+import { fetchPokemonList } from "../../api/pokemonApi";
 import { pokemanActions } from "../../redux/reducers/PokemanReducer";
 import { useDispatch, useSelector } from "react-redux";
 import PokemonCard from "../../components/pokemonCard";
@@ -10,18 +10,14 @@ const PokemonsList = () => {
   const pokemansDetails = useSelector((state) => state.pokeman.pokemansDetails);
 
   useEffect(() => {
-    async function fetchData() {
-      const data = await fetchPokemonList();
-      const pokemonWithDetails = await Promise.all(
-        data.map(async (pokemon) => {
-          const details = await fetchPokemonDetails(pokemon.name);
-          return { ...pokemon, details };
-        })
-      );
-      dispatch(pokemanActions.setPokemansDetails(pokemonWithDetails));
+    if (!pokemansDetails.length) {
+      async function fetchData() {
+        const data = await fetchPokemonList();
+        dispatch(pokemanActions.setPokemansDetails(data));
+      }
+      fetchData();
     }
-    fetchData();
-  }, []);
+  }, [pokemansDetails]);
 
   return (
     <div className="container">
