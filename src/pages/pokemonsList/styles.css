@@ -1,0 +1,35 @@
+.container {
+  background: linear-gradient(to bottom, #1e5799, #2989d8);
+  /* Replace the colors with your desired gradient colors */
+  min-height: 100vh; /* Make sure the container takes up the full viewport height */
+  padding: 20px; /* Add padding to space out content from the edges */
+}
+.pokemon-cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  text-align: center;
+  justify-content: center;
+
+}
+.pokemon-card {
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 20%;
+}
+.pokemon-card img {
+  height: auto;
+  width: 80%;
+}
+.pokemon-card a {
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+}
+.pokemon-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15);
+  background-color: #e0e0e0;
+}
+
+
