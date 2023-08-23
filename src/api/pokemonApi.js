@@ -1,19 +1,26 @@
-const BASE_URL = "https://pokeapi.co/api/v2";
+import { BASE_URL } from "../helpers/constants";
 
 export async function fetchPokemonList() {
-  const response = await fetch(`${BASE_URL}/pokemon`);
-  const data = await response.json();
-  const pokemonWithDetails = await Promise.all(
-    data.results.map(async (pokemon) => {
-      const details = await fetchPokemonDetails(pokemon.name);
-      return { ...pokemon, details };
+  return fetch(`${BASE_URL}/pokemon`)
+    .then(response => response.json())
+    .then(async data => {
+      const pokemonWithDetails = await Promise.all(
+        data.results.map(async pokemon => {
+          const details = await fetchPokemonDetails(pokemon.name);
+          return { ...pokemon, details };
+        })
+      );
+      return pokemonWithDetails;
     })
-  );
-  return pokemonWithDetails;
+    .catch(err => {
+      console.error("Error fetching Pokemon list:", err);
+      throw err; // You might want to propagate the error further up
+    });
 }
 
 export async function fetchPokemonDetails(pokemonName) {
-  const response = await fetch(`${BASE_URL}/pokemon/${pokemonName}`);
-  const data = await response.json();
-  return data;
+  return fetch(`${BASE_URL}/pokemon/${pokemonName}`).then(response => response.json()).then(data => data).catch(err => {
+    console.error("Error fetching Pokemon Details:", err);
+      throw err; // You might want to propagate the error further up
+  })
 }

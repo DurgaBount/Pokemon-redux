@@ -10,7 +10,7 @@ const PokemonsList = () => {
   const pokemansDetails = useSelector((state) => state.pokeman.pokemansDetails);
 
   useEffect(() => {
-    if (!pokemansDetails.length) {
+    if (!pokemansDetails?.length) {
       async function fetchData() {
         const data = await fetchPokemonList();
         dispatch(pokemanActions.setPokemansDetails(data));
@@ -21,7 +21,7 @@ const PokemonsList = () => {
 
   return (
     <div className="container">
-      <h1>{"Pokemon List"}</h1>
+      <h1>Pokemon List</h1>
       <div className="pokemon-cards-row">
         {pokemansDetails?.map((pokeman) => (
           <PokemonCard pokeman={pokeman} key={pokeman.name}></PokemonCard>

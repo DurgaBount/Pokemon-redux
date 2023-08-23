@@ -12,7 +12,7 @@ const PokemonDetails = () => {
 
   return (
     <div className="details-container">
-      <PokemonDetailsCard pokeman={pokemon}></PokemonDetailsCard>
+      {pokemon && <PokemonDetailsCard pokeman={pokemon}></PokemonDetailsCard>}
     </div>
   );
 };
