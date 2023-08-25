@@ -1,6 +1,7 @@
 import { useEffect } from "react";
+import { fetchPokemonList } from "../../api/pokemonApi";
+import { pokemanActions } from "../../redux/reducers/PokemanReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPokemonData } from "../../redux/reducers/PokemanActions";
 import PokemonCard from "../../components/pokemonCard";
 import "./styles.css";
 
@@ -10,7 +11,11 @@ const PokemonsList = () => {
 
   useEffect(() => {
     if (!pokemansDetails?.length) {
-      dispatch(fetchPokemonData());
+      async function fetchData() {
+        const data = await fetchPokemonList();
+        dispatch(pokemanActions.setPokemansDetails(data));
+      }
+      fetchData();
     }
   }, [pokemansDetails]);
 
